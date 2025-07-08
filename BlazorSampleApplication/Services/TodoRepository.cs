@@ -36,6 +36,7 @@ namespace BlazorSampleApplication.Services
 
             existing.Title = todo.Title;
             existing.Description = todo.Description;
+            existing.IsDone = todo.IsDone;
             await _context.SaveChangesAsync();
             return true;
         }

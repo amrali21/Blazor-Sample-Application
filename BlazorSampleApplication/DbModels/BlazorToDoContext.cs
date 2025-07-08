@@ -25,12 +25,11 @@ public partial class BlazorToDoContext : DbContext
     {
         modelBuilder.Entity<Todo>(entity =>
         {
-            entity.HasNoKey();
-
+            entity.Property(e => e.Id).HasMaxLength(50);
             entity.Property(e => e.Description)
                 .HasMaxLength(50)
                 .HasColumnName("description");
-            entity.Property(e => e.Id).HasMaxLength(50);
+            entity.Property(e => e.IsDone).HasColumnName("isDone");
             entity.Property(e => e.Title)
                 .HasMaxLength(50)
                 .HasColumnName("title");
