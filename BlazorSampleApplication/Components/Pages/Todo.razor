@@ -1,8 +1,13 @@
 ﻿@using BlazorSampleApplication.Models;
-
+@using BlazorSampleApplication.Services
 @page "/todo"
 
 @rendermode InteractiveServer
+@inject TodoRepository repo;
+
+@{
+    //var todosDB = _context.Todos.ToList();
+}
 
 <h3>Todo (@todos.Count(todo => !todo.IsDone))</h3>
 <ul>
@@ -31,7 +36,6 @@ else
 @code {
     private List<TodoItem> todos = new();
     string newTodo = "";
-
     bool editMode = false;
     TodoItem itemToEdit = null;
 
