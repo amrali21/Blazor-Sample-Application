@@ -82,7 +82,7 @@ else
     async void Delete(TodoItem todo)
     {
         todos.Remove(todo);
-        await repo.DeleteTodoAsync(todo.Id.ToString());
+        await repo.DeleteTodoAsync(todo.Id);
     }
 
     async void ChangeDoneStatus(TodoItem todo)

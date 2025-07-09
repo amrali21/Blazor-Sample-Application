@@ -1,0 +1,65 @@
+﻿@page "/todo2"
+@rendermode InteractiveServer
+@using BlazorSampleApplication.Models
+@using BlazorSampleApplication.Services
+@using BlazorSampleApplication.DbModels
+@inject TodoRepository repo
+@inject BlazorToDoContext context
+
+<h3>Index</h3>
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Done</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var todo in todosDB)
+                {
+                    <tr>
+                        <td>@todo.Title</td>
+                        <td>@todo.Description</td>
+                        <td>
+                            <input type="checkbox" @bind="todo.IsDone" @onclick="() => ChangeDoneStatus(todo)" />
+                        </td>
+                        <td>
+                            <a href="@($"todos/edit?id={todo.Id}")">Edit</a> |
+                            <a href="@($"todos/details?id={todo.Id}")">Details</a> |
+                            <button @onclick="() => Delete(todo.Id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+@code {
+    private List<DbModels.Todo> todosDB = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        todosDB = await repo.GetTodosAsync();
+    }
+
+    async void Delete(int id)
+    {
+        todosDB = todosDB.Where(t => t.Id != id).ToList();
+        await repo.DeleteTodoAsync(id);
+    }
+
+    async void ChangeDoneStatus(DbModels.Todo todo)
+    {
+        // e.Value contains the checked status as an object (true/false)
+
+        todo.IsDone = todo.IsDone == null ? true: !todo.IsDone;
+        await repo.UpdateTodoAsync(todo);
+
+    }
+}

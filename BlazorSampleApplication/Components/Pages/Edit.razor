@@ -1,0 +1,65 @@
+﻿@page "/todos/edit"
+@using Microsoft.EntityFrameworkCore;
+@using BlazorSampleApplication.DbModels;
+@using BlazorSampleApplication.Services
+
+@inject NavigationManager NavigationManager;
+@inject TodoRepository repo;
+
+<PageTitle>Create</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>Todo</h2>
+
+@if (Todo is null)
+{
+    <p><em>Loading...</em></p>
+    return;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Todo" OnValidSubmit="EditTodo" FormName="edit" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert" />
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <InputText id="title" @bind-Value="Todo.Title" class="form-control" />
+                <ValidationMessage For="() => Todo.Title" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label">Description:</label>
+                <InputText id="title" @bind-Value="Todo.Description" class="form-control" />
+                <ValidationMessage For="() => Todo.Description" class="text-danger" />
+            </div>
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/todo">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private DbModels.Todo? Todo { get; set; }
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {    
+       Todo = await repo.GetTodoByIdAsync(Id);
+    }
+
+
+    private async Task EditTodo()
+    {
+        await repo.UpdateTodoAsync(Todo);
+        NavigationManager.NavigateTo("/todo");
+    }
+
+}

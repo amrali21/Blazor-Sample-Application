@@ -16,7 +16,7 @@ namespace BlazorSampleApplication.Services
             return await _context.Todos.ToListAsync();
         }
 
-        public async Task<Todo?> GetTodoByIdAsync(string id)
+        public async Task<Todo?> GetTodoByIdAsync(int id)
         {
             return await _context.Todos.FindAsync(id);
         }
@@ -41,7 +41,7 @@ namespace BlazorSampleApplication.Services
             return true;
         }
 
-        public async Task<bool> DeleteTodoAsync(string id)
+        public async Task<bool> DeleteTodoAsync(int id)
         {
             var todo = await _context.Todos.FindAsync(id);
             if (todo == null)
