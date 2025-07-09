@@ -1,4 +1,4 @@
-﻿@page "/todo2"
+﻿@page "/todo"
 @rendermode InteractiveServer
 @using BlazorSampleApplication.Models
 @using BlazorSampleApplication.Services
@@ -22,20 +22,21 @@
                 @foreach (var todo in todosDB)
                 {
                     <tr>
-                        <td>@todo.Title</td>
-                        <td>@todo.Description</td>
-                        <td>
+                    <td class="align-middle">@todo.Title</td>
+                    <td class="align-middle">@todo.Description</td>
+                    <td class="align-middle">
                             <input type="checkbox" @bind="todo.IsDone" @onclick="() => ChangeDoneStatus(todo)" />
                         </td>
                         <td>
-                            <a href="@($"todos/edit?id={todo.Id}")">Edit</a> |
-                            <a href="@($"todos/details?id={todo.Id}")">Details</a> |
-                            <button @onclick="() => Delete(todo.Id)">Delete</button>
+                        <a class="btn btn-primary" href="@($"todo/edit?id={todo.Id}")">Edit</a> 
+                        <a class="btn btn-secondary"  href="@($"todo/details?id={todo.Id}")">Details</a> 
+                        <button class="btn btn-danger" @onclick="() => Delete(todo.Id)">Delete</button>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+          <a href="@($"todo/create")">Add</a> 
     </div>
 
 
