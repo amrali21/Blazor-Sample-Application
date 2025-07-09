@@ -5,7 +5,7 @@ namespace BlazorSampleApplication.DbModels;
 
 public partial class Todo
 {
-    public string Id { get; set; } = null!;
+    public int Id { get; set; } 
 
     public string? Title { get; set; }
 

@@ -58,9 +58,7 @@ else
 
             todos.Add(todo);
             await repo.AddTodoAsync(MapTodo(todo));
-
         }
-
     }
 
     async void SaveEdit()
@@ -100,7 +98,7 @@ else
     {
         return new DbModels.Todo
             {
-                Id = todo.Id.ToString(),
+                Id = todo.Id,
                 Title = todo.Title,
                 IsDone = todo.IsDone
             };
